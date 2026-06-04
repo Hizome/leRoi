@@ -1,0 +1,509 @@
+.mainBoard {
+  position: relative;
+  align-self: center;
+  width: min(100%, calc(100vh - 12.4rem));
+  max-width: 52rem;
+  aspect-ratio: 11 / 9;
+}
+
+.standard {
+  --board-files: 9;
+  --board-ranks: 9;
+  --board-selected: rgba(20, 85, 30, 0.45);
+  --board-selected-fill: rgba(20, 85, 30, 0.55);
+  --board-last: rgba(32, 128, 144, 0.28);
+  --board-active: rgba(0, 150, 170, 0.42);
+  --board-premoved: rgba(80, 80, 80, 0.35);
+}
+
+.sgWrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 9fr 1fr;
+  grid-template-areas: "sg-hand-top sg-board sg-hand-bottom";
+  gap: 0;
+  box-sizing: border-box;
+}
+
+.sgWrap sg-board {
+  grid-area: sg-board;
+}
+
+.wood sg-board,
+.wood sg-hand {
+  background-image: url("/assets/boards/wood.png");
+}
+
+.kaya1 sg-board,
+.kaya1 sg-hand {
+  background-image: url("/assets/boards/kaya1.jpg");
+}
+
+.kaya2 sg-board,
+.kaya2 sg-hand {
+  background-image: url("/assets/boards/kaya2.jpg");
+}
+
+.oak sg-board,
+.oak sg-hand {
+  background-image: url("/assets/boards/oak.png");
+}
+
+.sgWrap sg-board {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 0 1px #000;
+}
+
+.sgWrap sg-squares,
+.sgWrap sg-pieces,
+.sgWrap sg-promotion,
+.sgWrap sg-square-over,
+.sgWrap svg:global(.sg-shapes),
+.sgWrap svg:global(.sg-custom-svgs),
+.sgWrap sg-free-pieces {
+  position: absolute;
+  inset: 0;
+  display: block;
+  line-height: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.sgWrap sg-squares {
+  display: grid;
+  grid-template: repeat(9, 1fr) / repeat(9, 1fr);
+  justify-content: space-between;
+  width: calc(100% + 0.04px);
+  height: calc(100% + 0.04px);
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  pointer-events: none;
+}
+
+.sgWrap sg-squares sq {
+  position: relative;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.sgWrap sg-squares sq:global(.dest) {
+  background: radial-gradient(var(--board-selected) 19%, rgba(0, 0, 0, 0) 20%);
+}
+
+.sgWrap sg-squares sq:global(.pre-dest) {
+  background: radial-gradient(var(--board-premoved) 19%, rgba(0, 0, 0, 0) 20%);
+}
+
+.sgWrap sg-squares sq:global(.oc.dest) {
+  background: radial-gradient(transparent 0%, transparent 80%, var(--board-selected-fill) 80%);
+}
+
+.sgWrap sg-squares sq:global(.oc.pre-dest) {
+  background: radial-gradient(transparent 0%, transparent 80%, var(--board-premoved) 80%);
+}
+
+.sgWrap sg-squares sq:global(.last-dest) {
+  background-color: var(--board-last);
+}
+
+.sgWrap sg-squares sq:global(.selected),
+.sgWrap sg-squares sq:global(.force-selected) {
+  background-color: var(--board-active);
+}
+
+.sgWrap sg-squares sq:global(.preselected),
+.sgWrap sg-squares sq:global(.current-pre) {
+  background-color: var(--board-premoved);
+}
+
+.sgWrap sg-squares sq:global(.check) {
+  background-color: rgba(220, 20, 35, 0.42);
+}
+
+.sgWrap:global(.d-9x9) sg-squares sq:nth-child(31)::after,
+.sgWrap:global(.d-9x9) sg-squares sq:nth-child(34)::after,
+.sgWrap:global(.d-9x9) sg-squares sq:nth-child(58)::after,
+.sgWrap:global(.d-9x9) sg-squares sq:nth-child(61)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  margin: -4px;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+.sgWrap sg-pieces {
+  cursor: pointer;
+}
+
+.sgWrap piece {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(200% / 9);
+  height: calc(200% / 9);
+  margin: calc(-50% / 11 * 12 / 9) calc(-50% / 9);
+  transform: scale(0.5);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.sgWrap piece:global(.anim) {
+  z-index: 3;
+  will-change: transform;
+}
+
+.sgWrap piece:global(.fading) {
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.sgWrap piece:global(.ghost) {
+  opacity: 0.3;
+}
+
+.sgWrap piece:global(.dragging) {
+  cursor: pointer;
+  z-index: 20;
+}
+
+.sgWrap piece:global(.dragging.touch) {
+  top: -50px;
+}
+
+.sgWrap sg-square-over {
+  background-color: var(--board-active);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.sgWrap svg:global(.sg-shapes),
+.sgWrap svg:global(.sg-custom-svgs),
+.sgWrap sg-free-pieces {
+  overflow: visible;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.sgWrap sg-promotion {
+  z-index: 5;
+  background-color: #0000003f;
+}
+
+.sgWrap sg-promotion-square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% / 9);
+  height: calc(100% / 9);
+}
+
+.sgWrap sg-promotion-choices {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200%;
+  background-color: var(--mantine-color-dark-6);
+  box-shadow: 3px 3px 7px #000a;
+  cursor: pointer;
+}
+
+.sgWrap sg-promotion-choices:global(.reversed) {
+  margin: calc(-100% / 11 * 12) 0;
+  flex-direction: column-reverse;
+}
+
+.sgWrap sg-promotion-choices piece {
+  position: relative;
+  display: block;
+  width: 200%;
+  height: 100%;
+  margin: -50%;
+  transform: scale(0.5);
+}
+
+.sgWrap sg-hand-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100% / 9 * 7);
+}
+
+.sgWrap sg-hand-wrap:global(.hand-top) {
+  grid-area: sg-hand-top;
+  align-self: start;
+}
+
+.sgWrap sg-hand-wrap:global(.hand-bottom) {
+  grid-area: sg-hand-bottom;
+  align-self: end;
+}
+
+.sgWrap sg-hand {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column-reverse;
+  border: 1px solid #000;
+  background-size: cover;
+  box-sizing: border-box;
+}
+
+.sgWrap sg-hand-wrap:global(.hand-top) sg-hand {
+  background-position: top left;
+}
+
+.sgWrap sg-hand-wrap:global(.hand-bottom) sg-hand {
+  flex-direction: column;
+  background-position: bottom right;
+}
+
+.sgWrap sg-hand:global(.promotion) {
+  opacity: 0.6;
+}
+
+.sgWrap sg-hp-wrap {
+  position: relative;
+  flex: 1 0 14%;
+  width: 100%;
+  min-height: 0;
+}
+
+.sgWrap sg-hp-wrap:global(.selected) {
+  opacity: 1;
+  background-color: var(--board-active);
+}
+
+.sgWrap sg-hp-wrap:global(.preselected),
+.sgWrap sg-hp-wrap:global(.current-pre) {
+  opacity: 1;
+  background-color: var(--board-premoved);
+}
+
+.sgWrap sg-hp-wrap[data-nb="0"]:not(:global(.drawing)),
+.sgWrap sg-hp-wrap:not([data-nb]) {
+  opacity: 0.1;
+}
+
+.sgWrap sg-hp-wrap::after {
+  content: attr(data-nb);
+  position: absolute;
+  right: 1px;
+  bottom: 0;
+  z-index: 2;
+  min-width: 1rem;
+  padding: 2px 0.2em;
+  border: 1px solid #111;
+  background-color: rgba(255, 255, 255, 0.86);
+  color: #111;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 0.9;
+  text-align: center;
+}
+
+.sgWrap sg-hand-wrap:global(.hand-top) sg-hp-wrap::after {
+  top: 0;
+  bottom: unset;
+}
+
+.sgWrap sg-hp-wrap[data-nb="0"]:not(:global(.selected)):not(:global(.drawing))::after,
+.sgWrap sg-hp-wrap:not([data-nb])::after {
+  content: none;
+}
+
+.sgWrap sg-hp-wrap:global(.drawing)::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 12%;
+  height: 12%;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+.sgWrap sg-hp-wrap piece {
+  cursor: pointer;
+  width: 200%;
+  height: 200%;
+  margin: calc(-50% / 11 * 12) -50%;
+  transform: scale(0.5);
+  z-index: 2;
+}
+
+.sgWrap coords {
+  position: absolute;
+  display: flex;
+  color: #fff;
+  font-size: clamp(7px, 1vw, 11px);
+  font-weight: 700;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 2px #000;
+  z-index: 1;
+}
+
+.sgWrap coords:global(.ranks) {
+  top: 1px;
+  right: 0;
+  width: 1.1em;
+  height: 100%;
+  flex-flow: column-reverse;
+}
+
+.sgWrap coords:global(.ranks.gote) {
+  flex-flow: column;
+}
+
+.sgWrap coords:global(.files) {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.4em;
+  flex-flow: row;
+  text-align: left;
+}
+
+.sgWrap coords:global(.files.gote) {
+  flex-flow: row-reverse;
+}
+
+.sgWrap coord {
+  flex: 1 1 auto;
+}
+
+.sgWrap coords:global(.files) coord {
+  padding-left: 4px;
+}
+
+.sgWrap piece:global(.sente.pawn) {
+  background-image: url("/assets/pieces/standard/kanji_light/0FU.svg");
+}
+
+.sgWrap piece:global(.sente.lance) {
+  background-image: url("/assets/pieces/standard/kanji_light/0KY.svg");
+}
+
+.sgWrap piece:global(.sente.knight) {
+  background-image: url("/assets/pieces/standard/kanji_light/0KE.svg");
+}
+
+.sgWrap piece:global(.sente.silver) {
+  background-image: url("/assets/pieces/standard/kanji_light/0GI.svg");
+}
+
+.sgWrap piece:global(.sente.gold) {
+  background-image: url("/assets/pieces/standard/kanji_light/0KI.svg");
+}
+
+.sgWrap piece:global(.sente.king) {
+  background-image: url("/assets/pieces/standard/kanji_light/0OU.svg");
+}
+
+.sgWrap piece:global(.sente.bishop) {
+  background-image: url("/assets/pieces/standard/kanji_light/0KA.svg");
+}
+
+.sgWrap piece:global(.sente.rook) {
+  background-image: url("/assets/pieces/standard/kanji_light/0HI.svg");
+}
+
+.sgWrap piece:global(.sente.tokin),
+.sgWrap piece:global(.sente.promotedpawn) {
+  background-image: url("/assets/pieces/standard/kanji_light/0TO.svg");
+}
+
+.sgWrap piece:global(.sente.promotedlance) {
+  background-image: url("/assets/pieces/standard/kanji_light/0NY.svg");
+}
+
+.sgWrap piece:global(.sente.promotedknight) {
+  background-image: url("/assets/pieces/standard/kanji_light/0NK.svg");
+}
+
+.sgWrap piece:global(.sente.promotedsilver) {
+  background-image: url("/assets/pieces/standard/kanji_light/0NG.svg");
+}
+
+.sgWrap piece:global(.sente.horse) {
+  background-image: url("/assets/pieces/standard/kanji_light/0UM.svg");
+}
+
+.sgWrap piece:global(.sente.dragon) {
+  background-image: url("/assets/pieces/standard/kanji_light/0RY.svg");
+}
+
+.sgWrap piece:global(.gote.pawn) {
+  background-image: url("/assets/pieces/standard/kanji_light/1FU.svg");
+}
+
+.sgWrap piece:global(.gote.lance) {
+  background-image: url("/assets/pieces/standard/kanji_light/1KY.svg");
+}
+
+.sgWrap piece:global(.gote.knight) {
+  background-image: url("/assets/pieces/standard/kanji_light/1KE.svg");
+}
+
+.sgWrap piece:global(.gote.silver) {
+  background-image: url("/assets/pieces/standard/kanji_light/1GI.svg");
+}
+
+.sgWrap piece:global(.gote.gold) {
+  background-image: url("/assets/pieces/standard/kanji_light/1KI.svg");
+}
+
+.sgWrap piece:global(.gote.king) {
+  background-image: url("/assets/pieces/standard/kanji_light/1OU.svg");
+}
+
+.sgWrap piece:global(.gote.bishop) {
+  background-image: url("/assets/pieces/standard/kanji_light/1KA.svg");
+}
+
+.sgWrap piece:global(.gote.rook) {
+  background-image: url("/assets/pieces/standard/kanji_light/1HI.svg");
+}
+
+.sgWrap piece:global(.gote.tokin),
+.sgWrap piece:global(.gote.promotedpawn) {
+  background-image: url("/assets/pieces/standard/kanji_light/1TO.svg");
+}
+
+.sgWrap piece:global(.gote.promotedlance) {
+  background-image: url("/assets/pieces/standard/kanji_light/1NY.svg");
+}
+
+.sgWrap piece:global(.gote.promotedknight) {
+  background-image: url("/assets/pieces/standard/kanji_light/1NK.svg");
+}
+
+.sgWrap piece:global(.gote.promotedsilver) {
+  background-image: url("/assets/pieces/standard/kanji_light/1NG.svg");
+}
+
+.sgWrap piece:global(.gote.horse) {
+  background-image: url("/assets/pieces/standard/kanji_light/1UM.svg");
+}
+
+.sgWrap piece:global(.gote.dragon) {
+  background-image: url("/assets/pieces/standard/kanji_light/1RY.svg");
+}

@@ -1,0 +1,10 @@
+.sidebar {
+  width: 3rem;
+  border-right: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-7);
+}
+
+.main {
+  height: 100vh;
+  background: var(--mantine-color-dark-8);
+}

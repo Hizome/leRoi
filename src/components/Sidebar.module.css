@@ -1,0 +1,23 @@
+.link {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  color: var(--mantine-color-dark-0);
+  background: transparent;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--mantine-color-white);
+  background: var(--mantine-color-dark-6);
+}
+
+.active {
+  color: var(--mantine-color-white);
+  border-left-color: var(--mantine-primary-color-filled);
+}

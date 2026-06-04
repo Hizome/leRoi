@@ -1,0 +1,57 @@
+.panel {
+  min-height: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-7);
+}
+
+.engineLine {
+  padding: 0.55rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-6);
+}
+
+.evalBar {
+  height: 0.45rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-8);
+}
+
+.evalBar span {
+  display: block;
+  height: 100%;
+  background: var(--mantine-primary-color-filled);
+}
+
+.moveList {
+  min-height: 9rem;
+  flex: 1;
+  border: 1px solid var(--mantine-color-dark-4);
+}
+
+.moveRow {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+  font-size: 0.82rem;
+}
+
+.moveRow small {
+  color: var(--mantine-color-gray-5);
+}
+
+.emptyList {
+  padding: 0.75rem;
+}
+
+.sfenBox {
+  padding: 0.55rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-8);
+  overflow-wrap: anywhere;
+}

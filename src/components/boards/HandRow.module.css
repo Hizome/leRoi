@@ -1,0 +1,8 @@
+.handRow span {
+  min-width: 1.45rem;
+  padding: 0.08rem 0.3rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-6);
+  text-align: center;
+  font-size: 0.75rem;
+}
