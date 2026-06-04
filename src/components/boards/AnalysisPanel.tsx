@@ -40,7 +40,7 @@ export function AnalysisPanel({
           <Text size="xs" c="dimmed">
             Engine
           </Text>
-          <Text size="sm">USI engine 未连接</Text>
+          <Text size="sm">USI engine not connected</Text>
           <div className={classes.evalBar}>
             <span style={{ width: "51%" }} />
           </div>
@@ -48,7 +48,7 @@ export function AnalysisPanel({
 
         <Switch
           size="sm"
-          label="自动升变"
+          label="Auto-promote"
           checked={autoPromote}
           onChange={(event) => setShouldAutoPromote(event.currentTarget.checked)}
         />
@@ -66,7 +66,7 @@ export function AnalysisPanel({
           {moves.length === 0 ? (
             <div className={classes.emptyList}>
               <Text size="sm" c="dimmed">
-                从棋盘上选择当前手番棋子开始。
+                Select a 手番 piece on the board to begin.
               </Text>
               <Group gap={5} mt="xs">
                 <Kbd>click</Kbd>

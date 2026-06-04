@@ -94,6 +94,22 @@ The board is rendered through `shogiground`, matching lishogi's board model:
 
 React owns the outer app shell and the current game state.
 
+## Language Direction
+
+The UI language direction is English first, with Shogi-specific terms kept in Japanese where that gives the app the right domain feel.
+
+Current fixed Japanese terms include:
+
+- `将棋`
+- `先手`
+- `後手`
+- `手番`
+- `持駒`
+- piece names such as `歩`, `香`, `桂`, `銀`, `金`, `玉`, `角`, `飛`
+- move markers such as `打` and `成`
+
+Future localization should support English and Japanese while keeping these terms available as stable glossary entries.
+
 ## Static Assets
 
 Board, piece, and sound assets are stored under `public/assets` so they can be themed and packaged with the desktop app.
