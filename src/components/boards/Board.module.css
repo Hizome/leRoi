@@ -200,6 +200,80 @@
   z-index: 4;
 }
 
+.sgWrap svg:global(.sg-shapes) {
+  opacity: 0.78;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.primary line),
+.sgWrap svg:global(.sg-shapes) :global(g.primary ellipse) {
+  stroke: #3d8bfd;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-primary path) {
+  fill: #3d8bfd;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.alternative0 line),
+.sgWrap svg:global(.sg-shapes) :global(g.alternative0 ellipse) {
+  stroke: #34c759;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-alternative0 path) {
+  fill: #34c759;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.alternative1 line),
+.sgWrap svg:global(.sg-shapes) :global(g.alternative1 ellipse) {
+  stroke: #ff453a;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-alternative1 path) {
+  fill: #ff453a;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.alternative2 line),
+.sgWrap svg:global(.sg-shapes) :global(g.alternative2 ellipse) {
+  stroke: #ffd60a;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-alternative2 path) {
+  fill: #ffd60a;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engine line),
+.sgWrap svg:global(.sg-shapes) :global(g.engine ellipse) {
+  stroke: #22b8cf;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-engine path) {
+  fill: #22b8cf;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.variation line),
+.sgWrap svg:global(.sg-shapes) :global(g.variation ellipse) {
+  stroke: #9775fa;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-variation path) {
+  fill: #9775fa;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.current line),
+.sgWrap svg:global(.sg-shapes) :global(g.current ellipse) {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.45));
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.description ellipse) {
+  fill: rgba(20, 20, 20, 0.78);
+  stroke: rgba(255, 255, 255, 0.8);
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.description text) {
+  fill: #fff;
+  font-size: 3.2px;
+  font-weight: 700;
+}
+
 .sgWrap sg-promotion {
   z-index: 5;
   background-color: #0000003f;

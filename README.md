@@ -10,6 +10,7 @@ The current build uses React, Vite, Mantine, Tauri 2, `shogiground`, and `shogio
 - Shogiground-driven Shogi board rendering
 - Static board and piece assets copied into the project for future themes
 - Dynamic hands, legal move/drop highlights, drag-and-drop, promotion dialog, and move animation
+- User-drawn arrows, engine hint arrows, and clear-arrow controls
 - lishogi-style move and capture sounds
 - Tauri scaffold for desktop packaging
 
@@ -93,6 +94,13 @@ The board is rendered through `shogiground`, matching lishogi's board model:
 - Shogiground owns piece DOM, hands, dragging, move animation, and promotion UI
 
 React owns the outer app shell and the current game state.
+
+Board arrows follow the same split used by en-croissant:
+
+- user drawings are stored as `drawable.shapes`
+- engine hints are rendered as `drawable.autoShapes`
+- clearing drawn arrows only removes user drawings
+- engine arrows can be shown or hidden independently
 
 ## Language Direction
 

@@ -1,4 +1,5 @@
 import type { Color, Role, Square, SquareName } from "shogiops/types";
+import type { DrawShape } from "shogiground/draw";
 
 export type MoveRecord = {
   number: number;
@@ -17,3 +18,5 @@ export type PendingPromotion = {
   to: Square;
   toName: SquareName;
 };
+
+export type BoardShape = DrawShape;

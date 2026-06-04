@@ -4,7 +4,7 @@ import { initialSfen, makeSfen, parseSfen } from "shogiops/sfen";
 import type { Color, Role, SquareName } from "shogiops/types";
 import { makePieceName, parseSquareName } from "shogiops/util";
 import { pieceCanPromote, pieceForcePromote } from "shogiops/variant/util";
-import type { MoveRecord, PendingPromotion } from "@/types/shogi";
+import type { BoardShape, MoveRecord, PendingPromotion } from "@/types/shogi";
 
 export function useShogiGame() {
   const [sfen, setSfen] = useState(() => initialSfen("standard"));
@@ -15,6 +15,9 @@ export function useShogiGame() {
   const [moves, setMoves] = useState<MoveRecord[]>([]);
   const [autoPromote, setAutoPromote] = useState(false);
   const [orientation, setOrientation] = useState<Color>("sente");
+  const [userShapes, setUserShapes] = useState<BoardShape[]>([]);
+  const [showEngineArrows, setShowEngineArrows] = useState(true);
+  const [eraseDrawablesOnClick, setEraseDrawablesOnClick] = useState(false);
 
   const position = useMemo(() => parseSfen("standard", sfen).unwrap(), [sfen]);
   const legalMoves = useMemo(() => shogigroundMoveDests(position), [position]);
@@ -23,6 +26,10 @@ export function useShogiGame() {
   const selectedDropDests = selectedHandRole
     ? (legalDrops.get(makePieceName({ color: position.turn, role: selectedHandRole })) ?? [])
     : [];
+  const engineShapes = useMemo(
+    () => (showEngineArrows ? makeEngineHintShapes(legalMoves) : []),
+    [legalMoves, showEngineArrows],
+  );
 
   function resetBoard() {
     setSfen(initialSfen("standard"));
@@ -31,6 +38,7 @@ export function useShogiGame() {
     setPendingPromotion(null);
     setLastMove(null);
     setMoves([]);
+    setUserShapes([]);
   }
 
   function setBoardOrientation(value: Color) {
@@ -39,6 +47,22 @@ export function useShogiGame() {
 
   function setShouldAutoPromote(value: boolean) {
     setAutoPromote(value);
+  }
+
+  function setBoardShapes(shapes: BoardShape[]) {
+    setUserShapes(shapes);
+  }
+
+  function clearBoardShapes() {
+    setUserShapes([]);
+  }
+
+  function setShouldShowEngineArrows(value: boolean) {
+    setShowEngineArrows(value);
+  }
+
+  function setShouldEraseDrawablesOnClick(value: boolean) {
+    setEraseDrawablesOnClick(value);
   }
 
   function playUserMove(fromName: SquareName, toName: SquareName, promotion: boolean) {
@@ -158,6 +182,8 @@ export function useShogiGame() {
 
   return {
     autoPromote,
+    engineShapes,
+    eraseDrawablesOnClick,
     lastMove,
     moves,
     orientation,
@@ -168,7 +194,9 @@ export function useShogiGame() {
     selectedDropDests,
     selectedHandRole,
     sfen,
+    userShapes,
     choosePromotion,
+    clearBoardShapes,
     legalDrops,
     legalMoves,
     playUserDrop,
@@ -176,7 +204,30 @@ export function useShogiGame() {
     resetBoard,
     selectHandRole,
     selectSquare,
+    setBoardShapes,
     setBoardOrientation,
     setShouldAutoPromote,
+    setShouldEraseDrawablesOnClick,
+    setShouldShowEngineArrows,
+    showEngineArrows,
   };
+}
+
+function makeEngineHintShapes(legalMoves: Map<SquareName, SquareName[]>): BoardShape[] {
+  const shapes: BoardShape[] = [];
+
+  for (const [orig, dests] of legalMoves) {
+    const dest = dests[0];
+    if (!dest) continue;
+
+    shapes.push({
+      orig,
+      dest,
+      brush: "engine",
+      description: "1",
+    });
+    break;
+  }
+
+  return shapes;
 }

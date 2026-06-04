@@ -9,6 +9,7 @@ import { Shogiground } from "shogiground";
 import type { Api } from "shogiground/api";
 import type { Config } from "shogiground/config";
 import type * as sg from "shogiground/types";
+import type { BoardShape } from "@/types/shogi";
 import { playShogiMoveSound, preloadShogiMoveSounds } from "@/utils/sound";
 import { boardTheme } from "@/utils/shogi";
 import classes from "./Board.module.css";
@@ -20,7 +21,11 @@ type BoardProps = {
   lastMove: [SquareName, SquareName] | null;
   legalMoves: Map<SquareName, SquareName[]>;
   legalDrops: Map<string, SquareName[]>;
+  engineShapes: BoardShape[];
+  eraseDrawablesOnClick: boolean;
   sfen: string;
+  userShapes: BoardShape[];
+  setBoardShapes: (shapes: BoardShape[]) => void;
   playUserDrop: (piece: Piece, toName: SquareName, promotion: boolean) => void;
   playUserMove: (fromName: SquareName, toName: SquareName, promotion: boolean) => void;
 };
@@ -34,7 +39,11 @@ export function Board({
   lastMove,
   legalMoves,
   legalDrops,
+  engineShapes,
+  eraseDrawablesOnClick,
   sfen,
+  userShapes,
+  setBoardShapes,
   playUserDrop,
   playUserMove,
 }: BoardProps) {
@@ -47,13 +56,31 @@ export function Board({
         autoPromote,
         legalDrops,
         legalMoves,
+        engineShapes,
+        eraseDrawablesOnClick,
         orientation,
         playUserDrop,
         playUserMove,
         position,
+        setBoardShapes,
         sfen,
+        userShapes,
       }),
-    [autoPromote, lastMove, legalDrops, legalMoves, orientation, playUserDrop, playUserMove, position, sfen],
+    [
+      autoPromote,
+      engineShapes,
+      eraseDrawablesOnClick,
+      lastMove,
+      legalDrops,
+      legalMoves,
+      orientation,
+      playUserDrop,
+      playUserMove,
+      position,
+      setBoardShapes,
+      sfen,
+      userShapes,
+    ],
   );
 
   useEffect(() => {
@@ -88,7 +115,11 @@ function makeShogigroundConfig({
   autoPromote,
   legalMoves,
   legalDrops,
+  engineShapes,
+  eraseDrawablesOnClick,
   sfen,
+  userShapes,
+  setBoardShapes,
   playUserDrop,
   playUserMove,
 }: {
@@ -98,7 +129,11 @@ function makeShogigroundConfig({
   autoPromote: boolean;
   legalMoves: Map<SquareName, SquareName[]>;
   legalDrops: Map<string, SquareName[]>;
+  engineShapes: BoardShape[];
+  eraseDrawablesOnClick: boolean;
   sfen: string;
+  userShapes: BoardShape[];
+  setBoardShapes: (shapes: BoardShape[]) => void;
   playUserDrop: (piece: Piece, toName: SquareName, promotion: boolean) => void;
   playUserMove: (fromName: SquareName, toName: SquareName, promotion: boolean) => void;
 }): Config {
@@ -211,6 +246,10 @@ function makeShogigroundConfig({
     drawable: {
       enabled: true,
       visible: true,
+      eraseOnClick: eraseDrawablesOnClick,
+      shapes: userShapes,
+      autoShapes: engineShapes,
+      onChange: setBoardShapes,
     },
   };
 }

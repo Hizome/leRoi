@@ -1,21 +1,33 @@
 import { ActionIcon, Divider, Group, Kbd, ScrollArea, Stack, Switch, Text, Tooltip } from "@mantine/core";
-import { IconFlag, IconPlayerPlay } from "@tabler/icons-react";
+import { IconArrowUpRight, IconEraser, IconFlag, IconPlayerPlay, IconTrash } from "@tabler/icons-react";
 import type { MoveRecord } from "@/types/shogi";
 import { formatMove } from "@/utils/shogi";
 import classes from "./AnalysisPanel.module.css";
 
 type AnalysisPanelProps = {
   autoPromote: boolean;
+  clearBoardShapes: () => void;
+  eraseDrawablesOnClick: boolean;
   moves: MoveRecord[];
+  setShouldEraseDrawablesOnClick: (value: boolean) => void;
   sfen: string;
   setShouldAutoPromote: (value: boolean) => void;
+  setShouldShowEngineArrows: (value: boolean) => void;
+  shapeCount: number;
+  showEngineArrows: boolean;
 };
 
 export function AnalysisPanel({
   autoPromote,
+  clearBoardShapes,
+  eraseDrawablesOnClick,
   moves,
+  setShouldEraseDrawablesOnClick,
   sfen,
   setShouldAutoPromote,
+  setShouldShowEngineArrows,
+  shapeCount,
+  showEngineArrows,
 }: AnalysisPanelProps) {
   return (
     <aside className={classes.panel}>
@@ -52,6 +64,52 @@ export function AnalysisPanel({
           checked={autoPromote}
           onChange={(event) => setShouldAutoPromote(event.currentTarget.checked)}
         />
+
+        <div className={classes.arrowTools}>
+          <Group justify="space-between" gap="xs">
+            <Group gap={6}>
+              <IconArrowUpRight size="1rem" />
+              <Text size="sm" fw={600}>
+                Arrows
+              </Text>
+            </Group>
+            <Group gap={4}>
+              <Tooltip label="Show engine hint arrows">
+                <ActionIcon
+                  variant={showEngineArrows ? "filled" : "default"}
+                  radius={0}
+                  onClick={() => setShouldShowEngineArrows(!showEngineArrows)}
+                >
+                  <IconArrowUpRight size="1rem" />
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label="Clear drawn arrows">
+                <ActionIcon
+                  variant="default"
+                  radius={0}
+                  disabled={shapeCount === 0}
+                  onClick={clearBoardShapes}
+                >
+                  <IconTrash size="1rem" />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
+          </Group>
+          <Group gap={5} mt="xs">
+            <Kbd>Shift</Kbd>
+            <Text size="xs" c="dimmed">
+              or right-drag to draw
+            </Text>
+          </Group>
+          <Switch
+            mt="xs"
+            size="xs"
+            label="Erase drawables on left-click"
+            checked={eraseDrawablesOnClick}
+            onChange={(event) => setShouldEraseDrawablesOnClick(event.currentTarget.checked)}
+            thumbIcon={eraseDrawablesOnClick ? <IconEraser size="0.65rem" /> : undefined}
+          />
+        </div>
 
         <Divider />
 

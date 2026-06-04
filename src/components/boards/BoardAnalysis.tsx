@@ -26,7 +26,11 @@ export default function BoardAnalysis({ game }: BoardAnalysisProps) {
           lastMove={game.lastMove}
           legalMoves={game.legalMoves}
           legalDrops={game.legalDrops}
+          engineShapes={game.engineShapes}
+          eraseDrawablesOnClick={game.eraseDrawablesOnClick}
           sfen={game.sfen}
+          userShapes={game.userShapes}
+          setBoardShapes={game.setBoardShapes}
           playUserDrop={game.playUserDrop}
           playUserMove={game.playUserMove}
         />
@@ -37,7 +41,13 @@ export default function BoardAnalysis({ game }: BoardAnalysisProps) {
         autoPromote={game.autoPromote}
         moves={game.moves}
         sfen={game.sfen}
+        clearBoardShapes={game.clearBoardShapes}
+        eraseDrawablesOnClick={game.eraseDrawablesOnClick}
+        setShouldEraseDrawablesOnClick={game.setShouldEraseDrawablesOnClick}
         setShouldAutoPromote={game.setShouldAutoPromote}
+        setShouldShowEngineArrows={game.setShouldShowEngineArrows}
+        shapeCount={game.userShapes.length}
+        showEngineArrows={game.showEngineArrows}
       />
     </div>
   );

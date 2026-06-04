@@ -24,6 +24,12 @@
   background: var(--mantine-primary-color-filled);
 }
 
+.arrowTools {
+  padding: 0.55rem;
+  border: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-dark-8);
+}
+
 .moveList {
   min-height: 9rem;
   flex: 1;
