@@ -11,7 +11,7 @@ import type { Config } from "shogiground/config";
 import type * as sg from "shogiground/types";
 import type { BoardShape } from "@/types/shogi";
 import { playShogiMoveSound, preloadShogiMoveSounds } from "@/utils/sound";
-import { boardTheme } from "@/utils/shogi";
+import { boardTheme, notationFiles, notationRanks } from "@/utils/shogi";
 import classes from "./Board.module.css";
 
 type BoardProps = {
@@ -150,8 +150,8 @@ function makeShogigroundConfig({
     lastDests: lastMove ?? undefined,
     coordinates: {
       enabled: true,
-      files: "numeric",
-      ranks: "numeric",
+      files: notationFiles(),
+      ranks: notationRanks(),
     },
     highlight: {
       lastDests: true,

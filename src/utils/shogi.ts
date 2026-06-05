@@ -1,4 +1,5 @@
 import type { Color, Piece, Role } from "shogiops/types";
+import type { Notation } from "shogiground/types";
 
 export const ranks = ["a", "b", "c", "d", "e", "f", "g", "h", "i"] as const;
 export const files = [9, 8, 7, 6, 5, 4, 3, 2, 1] as const;
@@ -6,6 +7,14 @@ export const files = [9, 8, 7, 6, 5, 4, 3, 2, 1] as const;
 export const pieceTheme = "kanji_light";
 export const boardTheme = "wood";
 const pieceSetPath = `/assets/pieces/standard/${pieceTheme}`;
+
+export function notationFiles(): Notation {
+  return "numeric";
+}
+
+export function notationRanks(): Notation {
+  return "engine";
+}
 
 export const roleAsset: Record<string, string> = {
   pawn: "FU",

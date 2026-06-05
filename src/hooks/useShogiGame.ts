@@ -213,20 +213,22 @@ export function useShogiGame() {
   };
 }
 
+const engineHintBrushes = ["engine", "engineAlt", "engineAlt"] as const;
+
 function makeEngineHintShapes(legalMoves: Map<SquareName, SquareName[]>): BoardShape[] {
   const shapes: BoardShape[] = [];
 
   for (const [orig, dests] of legalMoves) {
-    const dest = dests[0];
-    if (!dest) continue;
+    for (const dest of dests) {
+      if (shapes.length >= engineHintBrushes.length) return shapes;
 
-    shapes.push({
-      orig,
-      dest,
-      brush: "engine",
-      description: "1",
-    });
-    break;
+      shapes.push({
+        orig,
+        dest,
+        brush: engineHintBrushes[shapes.length],
+        description: String(shapes.length + 1),
+      });
+    }
   }
 
   return shapes;

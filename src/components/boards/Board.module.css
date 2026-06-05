@@ -3,7 +3,7 @@
   align-self: center;
   width: min(100%, calc(100vh - 12.4rem));
   max-width: 52rem;
-  aspect-ratio: 11 / 9;
+  aspect-ratio: 121 / 108;
 }
 
 .standard {
@@ -247,6 +247,41 @@
 
 .sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-engine path) {
   fill: #22b8cf;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engineAlt line),
+.sgWrap svg:global(.sg-shapes) :global(g.engineAlt ellipse) {
+  stroke: #22b8cf;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-engineAlt path) {
+  fill: #22b8cf;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engineAlt) {
+  opacity: 0.48;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engineThreat line),
+.sgWrap svg:global(.sg-shapes) :global(g.engineThreat ellipse) {
+  stroke: #ff6b6b;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-engineThreat path) {
+  fill: #ff6b6b;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engineThreatAlt line),
+.sgWrap svg:global(.sg-shapes) :global(g.engineThreatAlt ellipse) {
+  stroke: #ff6b6b;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(marker#arrowhead-engineThreatAlt path) {
+  fill: #ff6b6b;
+}
+
+.sgWrap svg:global(.sg-shapes) :global(g.engineThreatAlt) {
+  opacity: 0.42;
 }
 
 .sgWrap svg:global(.sg-shapes) :global(g.variation line),
